@@ -257,78 +257,192 @@ For each issue found, record:
 
 ### Phase 4: Report Generation
 
-Generate structured report with sections:
+Generate structured report with rich sections and evidence:
 
 ```markdown
 # 📋 Next.js Code Review Report
 
-## Summary
-- PR: [PR Link]
-- Repository: [Repo]
-- Files Changed: [X files, Y additions, Z deletions]
-- Issues Found: [Total count by severity]
-- Quality Gate: [PASS/FAIL]
+**PR**: [PR Link]
+**Repository**: [Repo]
+**Branch**: [source branch]
+**Files Changed**: [X files, +Y additions, -Z deletions]
+**Issues Found**: [N total]
 
-## Issues by Severity
+---
 
-### 🔴 Critical Issues (X found)
-1. [Issue 1] - [File:Line]
-   - Description: ...
-   - Impact: ...
-  - Fix: ... (shown only when `output.suggestFixes=true`)
+## 🎯 Quality Gate Result
 
-### 🟠 High Issues (X found)
-[Similar format]
+### **[✅ PASS / ❌ FAIL]**
 
-### 🟡 Medium Issues (X found)
-[Similar format]
+**Reason**: [Concise reason based on thresholds]
 
-### 🔵 Low Issues (X found)
-[Similar format]
+| Metric | Value | Threshold | Status |
+|--------|-------|-----------|--------|
+| Critical Issues | **[X]** | [allowed] | [PASS/FAIL] |
+| High Issues | [X] | [allowed] | [PASS/FAIL] |
+| Medium Issues | [X] | [allowed] | [PASS/FAIL] |
+| Low Issues | [X] | [allowed] | [PASS/FAIL] |
+| Avg Complexity | [X.X] | [max] | [PASS/FAIL] |
+| Test Coverage | [X%] | [min] | [PASS/MARGINAL/FAIL] |
 
-### ⚪ Info (X found)
-[Similar format]
+---
+
+## 🔴 Critical Issues (X found)
+
+### 1. [Issue Title]
+**Area**: [Security / Performance / etc.]
+**File**: `[path/file.ts:line]`
+**Severity**: 🔴 Critical
+**Impact**: [Business or technical risk]
+
+**Problem**:
+```typescript
+// Show exact problematic snippet
+```
+
+**Why this matters**:
+- [Risk 1]
+- [Risk 2]
+
+**Fix**:
+```typescript
+// Show concrete fixed snippet
+```
+
+**Related Rules**:
+- [Rule name](references/RULESET.md#[anchor])
+
+---
+
+## 🟠 High Issues (X found)
+
+### 1. [Issue Title]
+**Area**: [Dimension]
+**File**: `[path/file.ts:line]`
+**Severity**: 🟠 High
+**Impact**: [Impact statement]
+
+**Problem**:
+```typescript
+// Problem snippet
+```
+
+**Metrics**:
+- [Measured impact, e.g., query count, bundle delta, re-render count]
+
+**Fix**:
+```typescript
+// Improved snippet
+```
+
+**Urgency**: High - fix before production deploy
+
+---
+
+## 🟡 Medium Issues (X found)
+
+For medium issues, include concise entries with at least:
+- Area
+- File with line number
+- Severity
+- Impact
+- Optional short fix snippet or actionable suggestion
+
+---
+
+## 🔵 Low Issues (X found)
+
+Concise actionable findings with file+line and rationale.
+
+---
+
+## ⚪ Info (X found)
+
+Suggestions and best-practice improvements with references.
+
+---
+
+## 📊 Analysis by Dimension
+
+### 1. Next.js Conventions & Best Practices
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+### 2. Code Architecture & Structure
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+### 3. Complexity Issues
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+### 4. Performance Issues
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+### 5. API Routes & Backend Issues
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+### 6. Database & Data Fetching
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+### 7. Security Issues
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+### 8. Next.js & React Best Practices
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+### 9. Additional Issues
+- Status: [✅ Good / ⚠️ Issues / ❌ Critical]
+- Findings: [count + one-line summary]
+
+---
+
+## ✅ Recommendations
+
+### Before Merge
+1. [Must-fix blocker]
+2. [Must-fix blocker]
+
+### Before Production
+1. [High-priority non-blocker]
+2. [High-priority non-blocker]
+
+### Next Sprint
+1. [Maintainability improvement]
+2. [Test/documentation follow-up]
+
+---
+
+## 📌 Next Steps
+- [ ] Address all Critical issues before merge
+- [ ] Create follow-up tickets for High issues
+- [ ] Add tests for touched critical paths
+- [ ] Re-run this review after fixes
+- [ ] Attach final report to PR discussion
+
+---
+
+## 🧾 Appendix (Optional but Recommended)
+- Scanned files list
+- Rule hits per dimension
+- Largest diff hotspots
+- Config profile used (`startup`, `enterprise`, `fintech`, or custom)
 
 All issues listed above must include `[File:Line]` with a concrete line number.
 
-## Analysis by Dimension
+Each issue in Critical/High/Medium severity should prefer this detail order:
+1. What is wrong (with snippet)
+2. Why it matters (impact)
+3. How to fix (with snippet)
+4. Rule mapping (link)
 
-### 1. Next.js Conventions & Best Practices
-- Status: [✓ Good / ⚠️ Issues / ✗ Critical]
-- Findings: [X issues, brief summary]
+When `output.suggestFixes=false`, keep the same rich structure but omit the **Fix** subsection.
 
-### 2. Code Architecture & Structure
-[Similar format for all 9 dimensions]
-
-... (continue for all 9 areas)
-
-## Quality Gate
-
-**Overall Score**: [X/100]
-
-**Threshold Configuration**:
-- Critical Issues Allowed: [X (default 0)]
-- High Issues Allowed: [X (default 3)]
-- Medium Issues Allowed: [X (default 10)]
-- Average Complexity: [< 10 (flag if higher)]
-
-**Decision**: [✅ PASS / ❌ FAIL]
-
-**Reasoning**: [Why pass/fail based on thresholds]
-
-## Recommendations
-
-1. [Priority 1 fix]
-2. [Priority 2 fix]
-3. [Priority 3 fix]
-...
-
-## Next Steps
-
-- [ ] Address all Critical issues before merge
-- [ ] Create follow-up issue for High issues
-- [ ] Consider refactoring for complexity
-- [ ] Add tests for untested paths
 ```
 
 ### Phase 5: Quality Gate Decision
