@@ -1,0 +1,217 @@
+{
+  "profile": "fintech",
+  "description": "Maximum security + stability profile for fintech applications - strictest rules and maximum test coverage",
+  "projectType": "java",
+  "buildTool": "maven",
+  
+  "qualityGate": {
+    "enabled": true,
+    "failOnCritical": true,
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 0,
+    "mediumIssuesAllowed": 1,
+    "lowIssuesAllowed": 5,
+    "minTestCoveragePercent": 90,
+    "enforceCoverage": true
+  },
+
+  "analysis": {
+    "dimensions": {
+      "conventions": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "architecture": {
+        "enabled": true,
+        "severity": "Critical"
+      },
+      "complexity": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "performance": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "database": {
+        "enabled": true,
+        "severity": "Critical"
+      },
+      "security": {
+        "enabled": true,
+        "severity": "Critical"
+      },
+      "sonarqube": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "errorhandling": {
+        "enabled": true,
+        "severity": "Critical"
+      }
+    }
+  },
+
+  "rules": {
+    "PublicAPIJavaDoc": {
+      "enabled": true,
+      "severity": "High"
+    },
+    "CyclomaticComplexity": {
+      "enabled": true,
+      "severity": "High",
+      "threshold": 6
+    },
+    "MethodLength": {
+      "enabled": true,
+      "severity": "High",
+      "threshold": 25
+    },
+    "ClassSize": {
+      "enabled": true,
+      "severity": "Medium",
+      "maxLines": 150
+    },
+    "SQLInjectionRisk": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "HardcodedSecrets": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "WeakCrypto": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "MissingInputValidation": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "InsecureDeserialization": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "StringConcatenationInLoop": {
+      "enabled": true,
+      "severity": "High"
+    },
+    "MissingAuthenticationGuard": {
+      "enabled": true,
+      "severity": "Critical"
+    }
+  },
+
+  "complexity": {
+    "maxCyclomaticComplexity": 6,
+    "maxCognitiveComplexity": 10,
+    "maxMethodLength": 25,
+    "maxNestingDepth": 2,
+    "maxParameterCount": 3,
+    "maxClassMethodCount": 15
+  },
+
+  "testing": {
+    "minCoveragePercent": 90,
+    "requiredTestFiles": [
+      "src/test/java/**/*Test.java",
+      "src/test/java/**/*IT.java",
+      "src/test/java/**/*SecurityTest.java"
+    ],
+    "requiredTestMethods": [
+      "testHappyPath",
+      "testEdgeCases",
+      "testErrorHandling",
+      "testSecurityConstraints"
+    ],
+    "ignoredFiles": [
+      "**/config/**",
+      "**/*Constants.java"
+    ]
+  },
+
+  "security": {
+    "checkHardcodedSecrets": true,
+    "checkSQLInjection": true,
+    "checkXSS": true,
+    "checkAuthenticationBypass": true,
+    "checkWeakCrypto": true,
+    "checkInsecureDeserialization": true,
+    "requiredSecurityRules": [
+      "hardcoded-secret",
+      "sql-injection",
+      "authentication-bypass",
+      "authorization-bypass",
+      "missing-input-validation",
+      "unsafe-file-upload",
+      "weak-encryption",
+      "insecure-random"
+    ],
+    "allowedCrypto": ["bcrypt", "argon2", "scrypt"],
+    "forbiddenLibraries": ["md5", "sha1", "crypto-js", "Math.random"]
+  },
+
+  "database": {
+    "checkNPlus1": true,
+    "checkMissingEagerLoading": true,
+    "checkSelectStar": true,
+    "checkMissingIndexes": true,
+    "checkPreparedStatements": true,
+    "requireTransactions": true,
+    "dbType": "postgresql"
+  },
+
+  "audit": {
+    "requireAuditLogging": true,
+    "requireChangeTracking": true,
+    "requireDataEncryption": true,
+    "requiredLogPoints": [
+      "authentication",
+      "authorization",
+      "dataAccess",
+      "dataModification",
+      "exceptions",
+      "securityEvents"
+    ]
+  },
+
+  "logging": {
+    "enforceCriticalLogging": true,
+    "warnOnDebugInProduction": true,
+    "minLogLevel": "INFO",
+    "requiredLogPoints": [
+      "methodEntry",
+      "methodExit",
+      "databaseOperations",
+      "securityDecisions",
+      "exceptions"
+    ]
+  },
+
+  "exclusions": {
+    "files": [
+      "**/test/**",
+      "**/tests/**",
+      "**/*Test.java",
+      "**/generated/**",
+      "target/**"
+    ],
+    "directories": [
+      "src/test/java",
+      "src/integration-test/java"
+    ],
+    "patterns": [
+      ".*\\$\\d.*",
+      ".*Generated.*"
+    ]
+  },
+
+  "output": {
+    "format": "markdown",
+    "includeSeverityColors": true,
+    "groupBySeverity": true,
+    "includeMetrics": true,
+    "includeSecuritySummary": true,
+    "includeComplianceReport": true
+  }
+}

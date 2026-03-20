@@ -1,0 +1,163 @@
+{
+  "profile": "enterprise",
+  "description": "Strict enterprise profile - enforces high code quality standards and comprehensive testing",
+  "projectType": "java",
+  "buildTool": "maven",
+  
+  "qualityGate": {
+    "enabled": true,
+    "failOnCritical": true,
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 1,
+    "mediumIssuesAllowed": 3,
+    "lowIssuesAllowed": 15,
+    "minTestCoveragePercent": 85,
+    "enforceCoverage": true
+  },
+
+  "analysis": {
+    "dimensions": {
+      "conventions": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "architecture": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "complexity": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "performance": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "database": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "security": {
+        "enabled": true,
+        "severity": "Critical"
+      },
+      "sonarqube": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "errorhandling": {
+        "enabled": true,
+        "severity": "High"
+      }
+    }
+  },
+
+  "rules": {
+    "PublicAPIJavaDoc": {
+      "enabled": true,
+      "severity": "Medium"
+    },
+    "CyclomaticComplexity": {
+      "enabled": true,
+      "severity": "High",
+      "threshold": 8
+    },
+    "MethodLength": {
+      "enabled": true,
+      "severity": "Medium",
+      "threshold": 30
+    },
+    "ClassSize": {
+      "enabled": true,
+      "severity": "Medium",
+      "maxLines": 200
+    },
+    "SQLInjectionRisk": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "HardcodedSecrets": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "WeakCrypto": {
+      "enabled": true,
+      "severity": "High"
+    },
+    "MissingInputValidation": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "StringConcatenationInLoop": {
+      "enabled": true,
+      "severity": "High"
+    }
+  },
+
+  "complexity": {
+    "maxCyclomaticComplexity": 8,
+    "maxCognitiveComplexity": 12,
+    "maxMethodLength": 30,
+    "maxNestingDepth": 3,
+    "maxParameterCount": 4,
+    "maxClassMethodCount": 20
+  },
+
+  "testing": {
+    "minCoveragePercent": 85,
+    "requiredTestFiles": [
+      "src/test/java/**/*Test.java",
+      "src/test/java/**/*IT.java"
+    ],
+    "ignoredFiles": [
+      "**/config/**",
+      "**/*Config.java",
+      "**/*Constants.java"
+    ]
+  },
+
+  "security": {
+    "checkHardcodedSecrets": true,
+    "checkSQLInjection": true,
+    "checkXSS": true,
+    "checkAuthenticationBypass": true,
+    "checkWeakCrypto": true,
+    "checkInsecureDeserialization": true,
+    "allowedCrypto": ["bcrypt", "argon2", "scrypt"],
+    "forbiddenLibraries": ["md5", "sha1"]
+  },
+
+  "database": {
+    "checkNPlus1": true,
+    "checkMissingEagerLoading": true,
+    "checkSelectStar": true,
+    "checkMissingIndexes": true,
+    "checkPreparedStatements": true,
+    "dbType": "postgresql"
+  },
+
+  "exclusions": {
+    "files": [
+      "**/test/**",
+      "**/tests/**",
+      "**/*Test.java",
+      "**/generated/**",
+      "target/**"
+    ],
+    "directories": [
+      "src/test/java",
+      "src/integration-test/java"
+    ],
+    "patterns": [
+      ".*\\$\\d.*",
+      ".*Generated.*"
+    ]
+  },
+
+  "output": {
+    "format": "markdown",
+    "includeSeverityColors": true,
+    "groupBySeverity": true,
+    "includeMetrics": true
+  }
+}

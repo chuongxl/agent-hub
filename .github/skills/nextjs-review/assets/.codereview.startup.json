@@ -1,0 +1,131 @@
+{
+  "profile": "startup",
+  "description": "Optimized for fast-moving startups prioritizing speed-to-market over strict standards",
+  "author": "self-learning-suite",
+  "version": "1.0",
+  "activeAt": [
+    "stage: seed-series-a",
+    "team-size: <20",
+    "project-age: <2-years",
+    "deploy-frequency: multiple-per-day"
+  ],
+  "qualityGate": {
+    "criticalIssuesAllowed": 2,
+    "highIssuesAllowed": 8,
+    "mediumIssuesAllowed": 20,
+    "lowIssuesAllowed": 50,
+    "maxAverageCyclomaticComplexity": 12,
+    "maxAverageCognitiveComplexity": 18,
+    "minTestCoveragePercent": 50,
+    "maxDuplicationPercent": 5,
+    "failIfQualityGateExceeds": "CRITICAL > 2 OR HIGH > 8"
+  },
+  "reviewFocus": {
+    "priorityRules": [
+      "security-issues",
+      "database-fetching",
+      "performance-issues",
+      "api-routes"
+    ],
+    "deprioritizedRules": [
+      "code-style",
+      "missing-jsdoc",
+      "incomplete-comments",
+      "memory-leaks"
+    ]
+  },
+  "rules": {
+    "enabled": [
+      "nextjs-conventions",
+      "code-architecture",
+      "complexity-analysis",
+      "performance-issues",
+      "api-routes",
+      "database-fetching",
+      "security-issues",
+      "react-best-practices"
+    ],
+    "disabled": [
+      "compliance-requirements",
+      "audit-logging",
+      "soc-2-controls"
+    ],
+    "severity-overrides": {
+      "missing-jsdoc": "low",
+      "missing-error-boundary": "medium",
+      "missing-suspense-boundary": "medium",
+      "unused-import": "info",
+      "missing-performance-metric": "low",
+      "hardcoded-api-url": "high",
+      "client-component-api-call": "high"
+    },
+    "ignored-patterns": [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/dist/**",
+      "**/*.spec.tsx",
+      "**/*.test.tsx",
+      "**/__tests__/**",
+      "**/migrations/**",
+      "**/*.generated.ts"
+    ]
+  },
+  "nextjs": {
+    "imageOptimization": {
+      "required": false,
+      "severity": "medium"
+    },
+    "appRouterMigration": {
+      "required": false,
+      "severity": "medium"
+    },
+    "serverComponentUsage": {
+      "required": false,
+      "severity": "low"
+    }
+  },
+  "database": {
+    "requireParameterizedQueries": true,
+    "requireMigrationValidation": false,
+    "checkN1Queries": true,
+    "checkTransactions": false
+  },
+  "security": {
+    "checkSecrets": true,
+    "checkOWASP": true,
+    "requireAuthHeader": false,
+    "requireRateLimit": false,
+    "checkCSP": false
+  },
+  "testing": {
+    "minimumCoverageRequired": false,
+    "requireUnitTests": false,
+    "requireIntegrationTests": false
+  },
+  "performance": {
+    "checkBundleSize": true,
+    "checkImageOptimization": true,
+    "checkFontOptimization": true,
+    "checkLazyLoading": true,
+    "maxBundleSizeKB": 500,
+    "warnAtBundleSizeKB": 400
+  },
+  "reviewDuration": {
+    "targetSeconds": 15,
+    "maxSeconds": 30
+  },
+  "output": {
+    "format": "markdown",
+    "groupByDimension": true,
+    "includeSummary": true,
+    "includeRecommendations": true,
+    "suggestFixes": true
+  },
+  "reporting": {
+    "format": "markdown",
+    "includePerfMetrics": true,
+    "includeSecurityRisks": true,
+    "includeMetrics": true,
+    "detailLevel": "medium"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "profile": "fintech",
+  "description": "Maximum security + stability profile for fintech applications - strictest rules and maximum test coverage",
+  "qualityGate": {
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 0,
+    "mediumIssuesAllowed": 3,
+    "lowIssuesAllowed": 10,
+    "maxAverageCyclomaticComplexity": 6,
+    "maxAverageCognitiveComplexity": 10,
+    "minTestCoveragePercent": 85,
+    "maxDuplicationPercent": 1
+  },
+  "rules": {
+    "enabled": [
+      "nestjs-conventions",
+      "code-architecture",
+      "complexity-analysis",
+      "performance-issues",
+      "database-queries",
+      "database-schema",
+      "security-issues",
+      "sonarqube-issues",
+      "error-handling"
+    ],
+    "severity-overrides": {
+      "hardcoded-secret": "critical",
+      "sql-injection": "critical",
+      "authentication-bypass": "critical",
+      "authorization-bypass": "critical"
+    },
+    "ignored-patterns": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/*.spec.ts",
+      "**/*.e2e.spec.ts"
+    ]
+  },
+  "complexity": {
+    "maxCyclomaticComplexity": 6,
+    "maxCognitiveComplexity": 10,
+    "maxMethodLength": 30,
+    "maxNestingDepth": 2,
+    "maxParameterCount": 3,
+    "maxClassMethodCount": 15
+  },
+  "testing": {
+    "minCoveragePercent": 85,
+    "requiredTestFiles": [
+      "**/*.service.ts",
+      "**/*.controller.ts",
+      "**/*.repository.ts",
+      "**/*.gateway.ts"
+    ],
+    "ignoredFiles": [
+      "**/*.module.ts",
+      "**/*.dto.ts",
+      "**/*.interface.ts"
+    ]
+  },
+  "security": {
+    "blockCriticalSecurityIssues": true,
+    "requiredSecurityRules": [
+      "hardcoded-secret",
+      "sql-injection",
+      "authentication-bypass",
+      "authorization-bypass",
+      "missing-input-validation",
+      "unsafe-file-upload",
+      "insecure-random",
+      "weak-encryption",
+      "unsafe-deserialization",
+      "missing-csrf-protection"
+    ],
+    "allowedCrypto": ["bcrypt", "argon2", "scrypt"],
+    "forbiddenLibraries": ["md5", "crypto-js", "sha1", "Math.random"]
+  },
+  "performance": {
+    "maxQueryTimeMs": 50,
+    "flagNoQueryLimit": true,
+    "flagNoPagination": true,
+    "maxDataTransferMB": 0.5
+  },
+  "database": {
+    "requireTypeORM": true,
+    "requireEagerLoading": true,
+    "checkConstraints": true,
+    "checkIndexes": true,
+    "requireTransactions": true
+  },
+  "audit": {
+    "requireAuditLogging": true,
+    "requireChangeTracking": true,
+    "requireDataEncryption": true
+  },
+  "output": {
+    "format": "markdown",
+    "includeSeverityColors": true,
+    "groupBySeverity": true,
+    "includeMetrics": true,
+    "includeSecuritySummary": true
+  }
+}

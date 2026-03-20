@@ -1,0 +1,89 @@
+{
+  "qualityGate": {
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 3,
+    "mediumIssuesAllowed": 10,
+    "lowIssuesAllowed": 20,
+    "maxAverageCyclomaticComplexity": 10,
+    "maxAverageCognitiveComplexity": 15,
+    "minTestCoveragePercent": 70,
+    "maxDuplicationPercent": 3
+  },
+  "rules": {
+    "enabled": [
+      "nestjs-conventions",
+      "code-architecture",
+      "complexity-analysis",
+      "performance-issues",
+      "database-queries",
+      "database-schema",
+      "security-issues",
+      "sonarqube-issues",
+      "error-handling"
+    ],
+    "severity-overrides": {},
+    "ignored-patterns": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/*.spec.ts",
+      "**/*.e2e.spec.ts"
+    ]
+  },
+  "complexity": {
+    "maxCyclomaticComplexity": 10,
+    "maxCognitiveComplexity": 15,
+    "maxMethodLength": 50,
+    "maxNestingDepth": 4,
+    "maxParameterCount": 4,
+    "maxClassMethodCount": 20
+  },
+  "testing": {
+    "minCoveragePercent": 70,
+    "requiredTestFiles": [
+      "**/*.service.ts",
+      "**/*.controller.ts"
+    ],
+    "ignoredFiles": [
+      "**/*.module.ts",
+      "**/*.dto.ts",
+      "**/*.interface.ts"
+    ]
+  },
+  "security": {
+    "blockCriticalSecurityIssues": true,
+    "requiredSecurityRules": [
+      "hardcoded-secret",
+      "sql-injection",
+      "authentication-bypass",
+      "missing-input-validation"
+    ],
+    "allowedCrypto": ["bcrypt", "argon2", "scrypt"],
+    "forbiddenLibraries": ["md5", "crypto-js"]
+  },
+  "performance": {
+    "maxQueryTimeMs": 100,
+    "flagNoQueryLimit": true,
+    "flagNoPagination": true,
+    "maxDataTransferMB": 1
+  },
+  "database": {
+    "requireTypeORM": true,
+    "requireEagerLoading": false,
+    "checkConstraints": true,
+    "checkIndexes": true
+  },
+  "output": {
+    "format": "markdown",
+    "severityColors": {
+      "critical": "🔴",
+      "high": "🟠",
+      "medium": "🟡",
+      "low": "🔵",
+      "info": "⚪"
+    },
+    "groupByDimension": true,
+    "includeSummary": true,
+    "includeRecommendations": true
+  }
+}

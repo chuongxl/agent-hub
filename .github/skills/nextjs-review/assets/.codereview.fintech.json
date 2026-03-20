@@ -1,0 +1,257 @@
+{
+  "profile": "fintech",
+  "description": "Strict financial services grade review standards with maximum security, compliance, and audit requirements",
+  "author": "self-learning-suite",
+  "version": "1.0",
+  "activeAt": [
+    "industry: financial-services",
+    "compliance-required: true",
+    "regulatory: PCI-DSS, SOC-2, GDPR, HIPAA",
+    "team-size: 100+",
+    "project-age: 5+-years"
+  ],
+  "qualityGate": {
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 1,
+    "mediumIssuesAllowed": 5,
+    "lowIssuesAllowed": 10,
+    "maxAverageCyclomaticComplexity": 8,
+    "maxAverageCognitiveComplexity": 12,
+    "minTestCoveragePercent": 85,
+    "maxDuplicationPercent": 2,
+    "failIfQualityGateExceeds": "CRITICAL > 0 OR HIGH > 1 OR (MEDIUM + HIGH) > 6",
+    "requireManualApproval": true,
+    "requireSecurityApproval": true
+  },
+  "reviewFocus": {
+    "priorityRules": [
+      "security-issues",
+      "compliance-requirements",
+      "audit-logging",
+      "soc-2-controls",
+      "data-protection",
+      "database-fetching",
+      "api-routes",
+      "code-architecture",
+      "testing-documentation"
+    ],
+    "mustNeverIgnore": [
+      "hardcoded-secret",
+      "sql-injection",
+      "xss-vulnerability",
+      "csrf",
+      "authentication-bypass",
+      "data-exposure"
+    ]
+  },
+  "rules": {
+    "enabled": [
+      "nextjs-conventions",
+      "code-architecture",
+      "complexity-analysis",
+      "performance-issues",
+      "api-routes",
+      "database-fetching",
+      "security-issues",
+      "react-best-practices",
+      "testing-documentation",
+      "accessibility-compliance",
+      "code-style",
+      "compliance-requirements",
+      "audit-logging",
+      "soc-2-controls",
+      "pci-dss-controls",
+      "gdpr-compliance",
+      "data-protection"
+    ],
+    "disabled": [],
+    "severity-overrides": {
+      "hardcoded-secret": "critical",
+      "sql-injection": "critical",
+      "xss-vulnerability": "critical",
+      "csrf-protection-missing": "critical",
+      "authentication-bypass": "critical",
+      "data-exposure": "critical",
+      "unencrypted-pii": "critical",
+      "missing-audit-log": "critical",
+      "missing-error-boundary": "high",
+      "missing-suspense-boundary": "high",
+      "missing-jsdoc": "high",
+      "large-component": "medium",
+      "unused-import": "low",
+      "missing-inline-comment": "low"
+    },
+    "ignored-patterns": [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/dist/**",
+      "**/*.spec.tsx",
+      "**/*.test.tsx",
+      "**/__tests__/**",
+      "**/test-fixtures/**"
+    ],
+    "neverIgnorePatterns": [
+      "**/api/**",
+      "**/*auth*",
+      "**/*payment*",
+      "**/*transaction*",
+      "**/*crypto*",
+      "**/*sensitive*",
+      "**/*secret*"
+    ]
+  },
+  "nextjs": {
+    "imageOptimization": {
+      "required": true,
+      "severity": "high"
+    },
+    "appRouterMigration": {
+      "required": true,
+      "severity": "high"
+    },
+    "serverComponentUsage": {
+      "required": true,
+      "severity": "high"
+    },
+    "requireErrorBoundaries": true,
+    "requireSuspenseBoundaries": true,
+    "requireMetadataExports": true,
+    "requireCSPHeaders": true,
+    "requireSecurityHeaders": true
+  },
+  "database": {
+    "requireParameterizedQueries": true,
+    "requireMigrationValidation": true,
+    "requireMigrationReview": true,
+    "checkN1Queries": true,
+    "checkTransactions": true,
+    "requireORMUsage": true,
+    "requireDataEncryption": true,
+    "requireConnectionEncryption": true,
+    "forbidDataExport": true,
+    "auditDataAccess": true
+  },
+  "security": {
+    "checkSecrets": true,
+    "checkOWASP": true,
+    "requireAuthHeader": true,
+    "requireRateLimit": true,
+    "checkCSP": true,
+    "requireSecurityHeaders": true,
+    "checkSQLInjection": true,
+    "checkXSS": true,
+    "checkCSRF": true,
+    "requireCertificatePinning": true,
+    "requireInputValidation": true,
+    "requireOutputEncoding": true,
+    "requirePII": true,
+    "requireEncryption": true,
+    "checkVulnerabilities": true,
+    "requireSecurityTesting": true,
+    "requirePenetrationTest": false,
+    "requireCodeSigning": false
+  },
+  "compliance": {
+    "pciDss": {
+      "required": true,
+      "version": "3.2.1",
+      "checkCardHandling": true,
+      "requireEncryption": true,
+      "requireAuditLog": true
+    },
+    "soc2": {
+      "required": true,
+      "checkAccess": true,
+      "checkDataIntegrity": true,
+      "requireAuditLog": true
+    },
+    "gdpr": {
+      "required": true,
+      "checkConsentManagement": true,
+      "checkDataRetention": true,
+      "requireDataPortability": true,
+      "requireRightToBeDeleted": true
+    },
+    "hipaa": {
+      "required": false,
+      "checkPHIProtection": false
+    }
+  },
+  "testing": {
+    "minimumCoverageRequired": true,
+    "minimumCoveragePercent": 85,
+    "requireUnitTests": true,
+    "requireIntegrationTests": true,
+    "requireSecurityTests": true,
+    "requireLoadTesting": false,
+    "warnIfCoverageLow": true,
+    "requireTestReview": true
+  },
+  "performance": {
+    "checkBundleSize": true,
+    "checkImageOptimization": true,
+    "checkFontOptimization": true,
+    "checkLazyLoading": true,
+    "maxBundleSizeKB": 300,
+    "warnAtBundleSizeKB": 250,
+    "requireCoreWebVitals": true,
+    "maxCLS": 0.05,
+    "maxLCP": 2000,
+    "maxFID": 75
+  },
+  "accessibility": {
+    "checkA11y": true,
+    "checkAltText": true,
+    "checkColorContrast": true,
+    "checkKeyboardNav": true,
+    "checkScreenReaderCompat": true,
+    "warnLevel": "high"
+  },
+  "documentation": {
+    "requireJSDoc": true,
+    "requireInlineComments": true,
+    "requireREADME": true,
+    "requireChangelog": true,
+    "requireSecurityInfo": true,
+    "requireArchitectureDoc": true
+  },
+  "auditLogging": {
+    "required": true,
+    "logAllApiCalls": true,
+    "logDataAccess": true,
+    "logConfigChanges": true,
+    "logAuthenticationEvents": true,
+    "logSecurityEvents": true,
+    "retentionDays": 365,
+    "requireTimestamps": true,
+    "requireUserIdentification": true,
+    "requireIPTracking": true,
+    "requireEncryptedLogs": true
+  },
+  "reviewDuration": {
+    "targetSeconds": 30,
+    "maxSeconds": 60
+  },
+  "output": {
+    "format": "markdown",
+    "groupByDimension": true,
+    "includeSummary": true,
+    "includeRecommendations": true,
+    "suggestFixes": true
+  },
+  "reporting": {
+    "format": "html",
+    "includePerfMetrics": true,
+    "includeSecurityRisks": true,
+    "includeMetrics": true,
+    "includeAccessibility": true,
+    "includeCompliance": true,
+    "includeAuditLog": true,
+    "detailLevel": "comprehensive",
+    "generatePDF": true,
+    "requireSignature": true,
+    "requireApprovalChain": true,
+    "archiveReports": true,
+    "archiveRetentionDays": 2555
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "profile": "startup",
+  "description": "Fast iteration profile for startups - lenient thresholds to enable rapid development",
+  "qualityGate": {
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 5,
+    "mediumIssuesAllowed": 20,
+    "lowIssuesAllowed": 50,
+    "maxAverageCyclomaticComplexity": 12,
+    "maxAverageCognitiveComplexity": 18,
+    "minTestCoveragePercent": 50,
+    "maxDuplicationPercent": 5
+  },
+  "rules": {
+    "enabled": [
+      "nestjs-conventions",
+      "code-architecture",
+      "complexity-analysis",
+      "performance-issues",
+      "database-queries",
+      "security-issues",
+      "error-handling"
+    ],
+    "severity-overrides": {},
+    "ignored-patterns": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/*.spec.ts",
+      "**/*.e2e.spec.ts"
+    ]
+  },
+  "complexity": {
+    "maxCyclomaticComplexity": 12,
+    "maxCognitiveComplexity": 18,
+    "maxMethodLength": 60,
+    "maxNestingDepth": 5,
+    "maxParameterCount": 5,
+    "maxClassMethodCount": 25
+  },
+  "testing": {
+    "minCoveragePercent": 50,
+    "requiredTestFiles": [],
+    "ignoredFiles": [
+      "**/*.module.ts",
+      "**/*.dto.ts",
+      "**/*.interface.ts"
+    ]
+  },
+  "security": {
+    "blockCriticalSecurityIssues": true,
+    "requiredSecurityRules": [
+      "hardcoded-secret",
+      "sql-injection"
+    ],
+    "allowedCrypto": ["bcrypt", "argon2", "crypto-js"],
+    "forbiddenLibraries": ["md5"]
+  },
+  "performance": {
+    "maxQueryTimeMs": 500,
+    "flagNoQueryLimit": false,
+    "flagNoPagination": false,
+    "maxDataTransferMB": 5
+  },
+  "database": {
+    "requireTypeORM": false,
+    "requireEagerLoading": false,
+    "checkConstraints": true,
+    "checkIndexes": false
+  },
+  "output": {
+    "format": "markdown",
+    "includeSeverityColors": true,
+    "groupBySeverity": true
+  }
+}

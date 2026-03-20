@@ -1,0 +1,157 @@
+{
+  "projectType": "java",
+  "projectName": "java-service",
+  "buildTool": "maven",
+  "javaVersion": "11",
+  "enforceJavaVersion": false,
+  
+  "qualityGate": {
+    "enabled": true,
+    "failOnCritical": true,
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 3,
+    "mediumIssuesAllowed": 10,
+    "lowIssuesAllowed": 50,
+    "minTestCoveragePercent": 70,
+    "enforceCoverage": false
+  },
+
+  "analysis": {
+    "dimensions": {
+      "conventions": {
+        "enabled": true,
+        "severity": "Medium"
+      },
+      "architecture": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "complexity": {
+        "enabled": true,
+        "severity": "Medium"
+      },
+      "performance": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "database": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "security": {
+        "enabled": true,
+        "severity": "Critical"
+      },
+      "sonarqube": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "errorhandling": {
+        "enabled": true,
+        "severity": "High"
+      }
+    }
+  },
+
+  "rules": {
+    "PublicAPIJavaDoc": {
+      "enabled": true,
+      "severity": "Medium"
+    },
+    "CyclomaticComplexity": {
+      "enabled": true,
+      "severity": "High",
+      "threshold": 10
+    },
+    "MethodLength": {
+      "enabled": true,
+      "severity": "Medium",
+      "maxLines": 50
+    },
+    "StringConcatenationInLoop": {
+      "enabled": true,
+      "severity": "High"
+    },
+    "SQLInjectionRisk": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "HardcodedSecrets": {
+      "enabled": true,
+      "severity": "Critical"
+    }
+  },
+
+  "exclusions": {
+    "files": [
+      "**/test/**",
+      "**/tests/**",
+      "**/*Test.java",
+      "**/generated/**"
+    ],
+    "directories": [
+      "target/",
+      "build/",
+      "src/test/java"
+    ],
+    "patterns": [
+      ".*\\$\\d.*",
+      ".*Generated.*"
+    ]
+  },
+
+  "complexity": {
+    "cyclomaticComplexity": {
+      "threshold": 10,
+      "severity": "High"
+    },
+    "cognitivecomplexity": {
+      "threshold": 15,
+      "severity": "High"
+    },
+    "nppComplexity": {
+      "threshold": 4,
+      "severity": "Medium"
+    },
+    "methodLength": {
+      "maxLines": 50,
+      "severity": "Medium"
+    },
+    "classSize": {
+      "maxLines": 500,
+      "severity": "Medium"
+    },
+    "parameterCount": {
+      "maximum": 5,
+      "severity": "Medium"
+    }
+  },
+
+  "database": {
+    "checkNPlus1": true,
+    "checkMissingEagerLoading": true,
+    "checkSelectStar": true,
+    "checkMissingIndexes": true,
+    "checkPreparedStatements": true,
+    "dbType": "postgresql"
+  },
+
+  "security": {
+    "checkHardcodedSecrets": true,
+    "checkSQLInjection": true,
+    "checkXSS": true,
+    "checkAuthenticationBypass": true,
+    "checkWeakCrypto": true,
+    "checkInsecureDeserialization": true,
+    "secretPatterns": [
+      "(?i)(password|passwd|pwd)\\s*[=:]",
+      "(?i)(secret|token|api[_-]?key)\\s*[=:]"
+    ]
+  },
+
+  "logging": {
+    "enforceCriticalLogging": true,
+    "warnOnDebugInProduction": true,
+    "minLogLevel": "INFO"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "profile": "startup",
+  "description": "Fast iteration profile for startups - lenient thresholds to enable rapid development",
+  "projectType": "java",
+  "buildTool": "maven",
+  
+  "qualityGate": {
+    "enabled": true,
+    "failOnCritical": true,
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 10,
+    "mediumIssuesAllowed": 20,
+    "lowIssuesAllowed": 50,
+    "minTestCoveragePercent": 50,
+    "enforceCoverage": false
+  },
+
+  "analysis": {
+    "dimensions": {
+      "conventions": {
+        "enabled": true,
+        "severity": "Medium"
+      },
+      "architecture": {
+        "enabled": true,
+        "severity": "Medium"
+      },
+      "complexity": {
+        "enabled": true,
+        "severity": "Low"
+      },
+      "performance": {
+        "enabled": true,
+        "severity": "Low"
+      },
+      "database": {
+        "enabled": true,
+        "severity": "Medium"
+      },
+      "security": {
+        "enabled": true,
+        "severity": "High"
+      },
+      "sonarqube": {
+        "enabled": true,
+        "severity": "Medium"
+      },
+      "errorhandling": {
+        "enabled": true,
+        "severity": "Medium"
+      }
+    }
+  },
+
+  "rules": {
+    "PublicAPIJavaDoc": {
+      "enabled": false
+    },
+    "CyclomaticComplexity": {
+      "enabled": true,
+      "severity": "Medium",
+      "threshold": 12
+    },
+    "MethodLength": {
+      "enabled": false
+    },
+    "ClassSize": {
+      "enabled": false
+    },
+    "SQLInjectionRisk": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "HardcodedSecrets": {
+      "enabled": true,
+      "severity": "Critical"
+    },
+    "WeakCrypto": {
+      "enabled": true,
+      "severity": "High"
+    }
+  },
+
+  "complexity": {
+    "maxCyclomaticComplexity": 12,
+    "maxCognitiveComplexity": 18,
+    "maxMethodLength": 60,
+    "maxNestingDepth": 5,
+    "maxParameterCount": 5,
+    "maxClassMethodCount": 25
+  },
+
+  "testing": {
+    "minCoveragePercent": 50,
+    "requiredTestFiles": [],
+    "ignoredFiles": [
+      "**/*Test.java",
+      "**/*IT.java"
+    ]
+  },
+
+  "security": {
+    "checkHardcodedSecrets": true,
+    "checkSQLInjection": true,
+    "checkXSS": false,
+    "checkAuthenticationBypass": false,
+    "checkWeakCrypto": true,
+    "checkInsecureDeserialization": false,
+    "allowedCrypto": ["bcrypt", "argon2", "crypto"]
+  },
+
+  "database": {
+    "checkNPlus1": false,
+    "checkMissingEagerLoading": false,
+    "checkSelectStar": true,
+    "checkMissingIndexes": false,
+    "checkPreparedStatements": true
+  },
+
+  "exclusions": {
+    "files": [
+      "**/test/**",
+      "**/tests/**",
+      "**/*Test.java",
+      "**/generated/**",
+      "target/**"
+    ],
+    "directories": [
+      "src/test/java",
+      "src/integration-test/java"
+    ]
+  },
+
+  "output": {
+    "format": "markdown",
+    "includeSeverityColors": true,
+    "groupBySeverity": true
+  }
+}

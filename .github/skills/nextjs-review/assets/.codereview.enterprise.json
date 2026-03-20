@@ -1,0 +1,166 @@
+{
+  "profile": "enterprise",
+  "description": "Comprehensive enterprise-grade code review standards with balanced quality and velocity",
+  "author": "self-learning-suite",
+  "version": "1.0",
+  "activeAt": [
+    "stage: growth-scale",
+    "team-size: 50-500",
+    "project-age: 2-5-years",
+    "deploy-frequency: weekly"
+  ],
+  "qualityGate": {
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 3,
+    "mediumIssuesAllowed": 10,
+    "lowIssuesAllowed": 20,
+    "maxAverageCyclomaticComplexity": 10,
+    "maxAverageCognitiveComplexity": 15,
+    "minTestCoveragePercent": 70,
+    "maxDuplicationPercent": 3,
+    "failIfQualityGateExceeds": "CRITICAL > 0 OR HIGH > 3 OR (MEDIUM + HIGH) > 12"
+  },
+  "reviewFocus": {
+    "priorityRules": [
+      "security-issues",
+      "code-architecture",
+      "api-routes",
+      "database-fetching",
+      "performance-issues",
+      "testing-documentation"
+    ],
+    "deprioritizedRules": [
+      "incomplete-comments"
+    ]
+  },
+  "rules": {
+    "enabled": [
+      "nextjs-conventions",
+      "code-architecture",
+      "complexity-analysis",
+      "performance-issues",
+      "api-routes",
+      "database-fetching",
+      "security-issues",
+      "react-best-practices",
+      "testing-documentation",
+      "accessibility-compliance",
+      "code-style"
+    ],
+    "disabled": [
+      "compliance-requirements",
+      "audit-logging"
+    ],
+    "severity-overrides": {
+      "missing-error-boundary": "high",
+      "missing-suspense-boundary": "high",
+      "large-component": "medium",
+      "missing-jsdoc": "medium",
+      "missing-image-optimization": "high",
+      "client-component-api-call": "high",
+      "hardcoded-api-url": "high",
+      "circular-dependency": "critical",
+      "sql-injection": "critical",
+      "hardcoded-secret": "critical"
+    },
+    "ignored-patterns": [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/dist/**",
+      "**/*.spec.tsx",
+      "**/*.test.tsx",
+      "**/__tests__/**",
+      "**/migrations/**",
+      "**/*.generated.ts",
+      "**/mocks/**"
+    ]
+  },
+  "nextjs": {
+    "imageOptimization": {
+      "required": true,
+      "severity": "high"
+    },
+    "appRouterMigration": {
+      "required": false,
+      "severity": "medium",
+      "warnIfPages": true
+    },
+    "serverComponentUsage": {
+      "required": true,
+      "severity": "medium"
+    },
+    "requireErrorBoundaries": true,
+    "requireSuspenseBoundaries": true,
+    "requireMetadataExports": true
+  },
+  "database": {
+    "requireParameterizedQueries": true,
+    "requireMigrationValidation": true,
+    "checkN1Queries": true,
+    "checkTransactions": true,
+    "requireORMUsage": false
+  },
+  "security": {
+    "checkSecrets": true,
+    "checkOWASP": true,
+    "requireAuthHeader": true,
+    "requireRateLimit": true,
+    "checkCSP": true,
+    "requireSecurityHeaders": true,
+    "checkSQLInjection": true,
+    "checkXSS": true,
+    "checkCSRF": true
+  },
+  "testing": {
+    "minimumCoverageRequired": true,
+    "minimumCoveragePercent": 70,
+    "requireUnitTests": true,
+    "requireIntegrationTests": false,
+    "warnIfCoverageLow": true
+  },
+  "performance": {
+    "checkBundleSize": true,
+    "checkImageOptimization": true,
+    "checkFontOptimization": true,
+    "checkLazyLoading": true,
+    "maxBundleSizeKB": 350,
+    "warnAtBundleSizeKB": 300,
+    "requireCoreWebVitals": true,
+    "maxCLS": 0.1,
+    "maxLCP": 2500,
+    "maxFID": 100
+  },
+  "accessibility": {
+    "checkA11y": true,
+    "checkAltText": true,
+    "checkColorContrast": true,
+    "checkKeyboardNav": true,
+    "warnLevel": "medium"
+  },
+  "documentation": {
+    "requireJSDoc": true,
+    "requireInlineComments": true,
+    "requireREADME": true,
+    "requireChangelog": false
+  },
+  "reviewDuration": {
+    "targetSeconds": 20,
+    "maxSeconds": 45
+  },
+  "output": {
+    "format": "markdown",
+    "groupByDimension": true,
+    "includeSummary": true,
+    "includeRecommendations": true,
+    "suggestFixes": true
+  },
+  "reporting": {
+    "format": "html",
+    "includePerfMetrics": true,
+    "includeSecurityRisks": true,
+    "includeMetrics": true,
+    "includeAccessibility": true,
+    "detailLevel": "high",
+    "generatePDF": true
+  }
+}

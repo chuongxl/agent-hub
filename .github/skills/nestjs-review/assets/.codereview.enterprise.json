@@ -1,0 +1,89 @@
+{
+  "profile": "enterprise",
+  "description": "Strict enterprise profile - enforces high code quality standards and comprehensive testing",
+  "qualityGate": {
+    "criticalIssuesAllowed": 0,
+    "highIssuesAllowed": 0,
+    "mediumIssuesAllowed": 5,
+    "lowIssuesAllowed": 15,
+    "maxAverageCyclomaticComplexity": 8,
+    "maxAverageCognitiveComplexity": 12,
+    "minTestCoveragePercent": 80,
+    "maxDuplicationPercent": 2
+  },
+  "rules": {
+    "enabled": [
+      "nestjs-conventions",
+      "code-architecture",
+      "complexity-analysis",
+      "performance-issues",
+      "database-queries",
+      "database-schema",
+      "security-issues",
+      "sonarqube-issues",
+      "error-handling"
+    ],
+    "severity-overrides": {},
+    "ignored-patterns": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/*.spec.ts",
+      "**/*.e2e.spec.ts"
+    ]
+  },
+  "complexity": {
+    "maxCyclomaticComplexity": 8,
+    "maxCognitiveComplexity": 12,
+    "maxMethodLength": 40,
+    "maxNestingDepth": 3,
+    "maxParameterCount": 4,
+    "maxClassMethodCount": 20
+  },
+  "testing": {
+    "minCoveragePercent": 80,
+    "requiredTestFiles": [
+      "**/*.service.ts",
+      "**/*.controller.ts",
+      "**/*.repository.ts"
+    ],
+    "ignoredFiles": [
+      "**/*.module.ts",
+      "**/*.dto.ts",
+      "**/*.interface.ts",
+      "**/*.config.ts"
+    ]
+  },
+  "security": {
+    "blockCriticalSecurityIssues": true,
+    "requiredSecurityRules": [
+      "hardcoded-secret",
+      "sql-injection",
+      "authentication-bypass",
+      "authorization-bypass",
+      "missing-input-validation",
+      "unsafe-file-upload",
+      "insecure-random"
+    ],
+    "allowedCrypto": ["bcrypt", "argon2", "scrypt"],
+    "forbiddenLibraries": ["md5", "crypto-js", "sha1"]
+  },
+  "performance": {
+    "maxQueryTimeMs": 100,
+    "flagNoQueryLimit": true,
+    "flagNoPagination": true,
+    "maxDataTransferMB": 1
+  },
+  "database": {
+    "requireTypeORM": true,
+    "requireEagerLoading": false,
+    "checkConstraints": true,
+    "checkIndexes": true
+  },
+  "output": {
+    "format": "markdown",
+    "includeSeverityColors": true,
+    "groupBySeverity": true,
+    "includeMetrics": true
+  }
+}
