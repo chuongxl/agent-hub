@@ -461,6 +461,47 @@ Evaluate against configurable thresholds:
 - FAIL if: Any Critical issue found OR (High > threshold) OR (Medium > threshold) OR (Avg Complexity > threshold)
 - PASS if: All thresholds within limits
 
+### Phase 6: Report Output & Storage
+
+#### Step 6a: Create Output Directory
+- Ensure `./code-review` folder exists in the workspace root
+- If it doesn't exist, create it: `mkdir -p ./code-review`
+- This folder will contain all review reports and markdown files
+
+#### Step 6b: Generate Report File
+- **File Location**: `./code-review/[review-type]_[timestamp].md`
+- **File Naming Convention**:
+  - For PR reviews: `pr-[pr-number]_[timestamp].md` (e.g., `pr-123_2025-03-20T14-30-45.md`)
+  - For branch reviews: `branch-[branch-name]_[timestamp].md` (e.g., `branch-feature-auth_2025-03-20T14-30-45.md`)
+  - For single-branch scans: `scan-[branch-name]_[timestamp].md` (e.g., `scan-main_2025-03-20T14-30-45.md`)
+- **Timestamp Format**: Use ISO 8601 format or `YYYY-MM-DDTHH-mm-ss`
+- Output the full generated markdown report to this file
+
+#### Step 6c: Save Supporting Files (Optional)
+- If detailed analysis produces additional markdown files (e.g., separate files for each severity level, dimension analysis, etc.), save them in `./code-review` with descriptive names:
+  - `./code-review/[main-report]_critical-issues.md`
+  - `./code-review/[main-report]_high-issues.md`
+  - `./code-review/[main-report]_summary.md`
+- All supporting files should reference the main report file
+
+#### Step 6d: Display Confirmation
+- After saving, display a confirmation message:
+  ```
+  ✅ Review report saved to: ./code-review/[filename]
+  ```
+- Include the relative path from workspace root
+- Provide a brief summary:
+  - Total issues found
+  - Quality gate result (PASS/FAIL)
+  - Critical issues count
+
+#### Step 6e: File Output Guarantee
+- **Always** create and save the report to `./code-review` folder, even if:
+  - The review fails quality gates
+  - Issues are found
+  - The repository has errors
+- The report file is the primary deliverable of the review process
+
 ---
 
 ## Key Principles
