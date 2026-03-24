@@ -111,18 +111,29 @@ git ls-tree -r --name-only HEAD
 - For `--single` mode:
   - Identify all files in branch: `git ls-tree -r --name-only HEAD`
   - Count scope: total files scanned and directories covered
-- Scan for package.json to confirm NestJS project
+
+- **Detect NestJS project roots (monorepo support)**:
+  - Look for `.codereview.config.json` in the repo root.
+  - Read `project.rootFolders` (array) from config; if absent or empty, default to `["."]` (repo root).
+  - For each path in `project.rootFolders`:
+    - Check the path exists in the repo; if not, warn the user and skip it.
+    - Verify it contains a `package.json` with a `@nestjs/core` dependency; if missing, warn and ask the user to correct the path.
+  - Only valid, confirmed NestJS folders are carried forward for analysis.
+  - The full 9-dimension analysis (Phase 2) is run **independently for each valid folder**.
 - Present scope summary:
   ```
   Review Type: [PR Comparison / Branch Comparison / Single Branch Scan]
   Source Branch: feature/auth-system
   Destination Branch: main (for comparison modes)
-  Files Changed: X files (comparison modes)
-  Files Scanned: X files (single mode)
+  NestJS Projects: [list of resolved rootFolders]
+  Files Changed: X files across all projects (comparison modes)
+  Files Scanned: X files across all projects (single mode)
   Lines: Y added, Z deleted (comparison modes)
   ```
 
 ### Phase 2: Multi-Dimensional Analysis
+
+> **Multi-project**: Repeat this entire phase for each folder in `project.rootFolders`. Collect issues per project and merge into a unified report in Phase 4, with each issue tagged by its source project folder.
 
 Analyze the code across 9 dimensions in parallel:
 
@@ -220,14 +231,21 @@ For each issue found, record:
 
 Example config:
 ```json
-"output": {
-  "format": "markdown",
-  "groupByDimension": true,
-  "includeSummary": true,
-  "includeRecommendations": true,
-  "suggestFixes": true
+{
+  "project": {
+    "rootFolders": ["apps/user-service", "apps/order-service", "apps/notification-service"]
+  },
+  "output": {
+    "format": "markdown",
+    "groupByDimension": true,
+    "includeSummary": true,
+    "includeRecommendations": true,
+    "suggestFixes": true
+  }
 }
 ```
+
+- `project.rootFolders` — array of paths (relative to repo root) to NestJS application folders. Each folder is scanned independently. Defaults to `["."]` if not set.
 
 Example issue output:
 ```
@@ -255,40 +273,57 @@ Generate structured report with sections (all issues must include line numbers; 
 ## Summary
 - PR: [PR Link]
 - Repository: [Repo]
-- Files Changed: [X files, Y additions, Z deletions]
+- Projects Scanned: [list of rootFolders]
+- Files Changed: [X files total across all projects, Y additions, Z deletions]
 - Issues Found: [Total count by severity]
 - Quality Gate: [PASS/FAIL]
 
-## Issues by Severity
+---
 
-### 🔴 Critical Issues (X found)
+<!-- Repeat the following block for each project folder -->
+## 📦 Project: [rootFolder path]
+
+### Issues by Severity
+
+#### 🔴 Critical Issues (X found)
 1. [Issue 1] - [File:Line]
    - Description: ...
    - Impact: ...
    - Fix: ...
 
-### 🟠 High Issues (X found)
+#### 🟠 High Issues (X found)
 [Similar format]
 
-### 🟡 Medium Issues (X found)
+#### 🟡 Medium Issues (X found)
 [Similar format]
 
-### 🔵 Low Issues (X found)
+#### 🔵 Low Issues (X found)
 [Similar format]
 
-### ⚪ Info (X found)
+#### ⚪ Info (X found)
 [Similar format]
 
-## Analysis by Dimension
+### Analysis by Dimension
 
-### 1. NestJS Conventions & Best Practices
+#### 1. NestJS Conventions & Best Practices
 - Status: [✓ Good / ⚠️ Issues / ✗ Critical]
 - Findings: [X issues, brief summary]
 
-### 2. Code Architecture & Structure
+#### 2. Code Architecture & Structure
 [Similar format for all 9 dimensions]
 
 ... (continue for all 9 areas)
+<!-- End per-project block -->
+
+---
+
+## 🌐 Consolidated Summary (All Projects)
+
+| Project | Critical | High | Medium | Low | Info | Gate |
+|---------|----------|------|--------|-----|------|------|
+| [rootFolder 1] | X | X | X | X | X | ✅/❌ |
+| [rootFolder 2] | X | X | X | X | X | ✅/❌ |
+| **Total** | **X** | **X** | **X** | **X** | **X** | **✅/❌** |
 
 ## Quality Gate
 
@@ -300,15 +335,14 @@ Generate structured report with sections (all issues must include line numbers; 
 - Medium Issues Allowed: [X (default 10)]
 - Average Complexity: [< 10 (flag if higher)]
 
-**Decision**: [✅ PASS / ❌ FAIL]
-
-**Reasoning**: [Why pass/fail based on thresholds]
+**Decision**: [✅ PASS / ❌ FAIL]  
+**Reasoning**: [Overall pass/fail — fails if ANY project fails its quality gate]
 
 ## Recommendations
 
-1. [Priority 1 fix]
-2. [Priority 2 fix]
-3. [Priority 3 fix]
+1. [Priority 1 fix — include project label]
+2. [Priority 2 fix — include project label]
+3. [Priority 3 fix — include project label]
 ...
 
 ## Next Steps
@@ -402,12 +436,36 @@ Evaluate against configurable thresholds:
 
 ## Configuration Options
 
-Customize per project/team:
-- **Quality gate thresholds** (critical/high/medium limits)
+Customize per project/team via `.codereview.config.json` at the **repo root**:
+
+- **NestJS project roots** (`project.rootFolders`) — array of paths (relative to repo root) to NestJS application folders. Each is scanned independently and gets its own report section. Defaults to `["."]`.
+- **Quality gate thresholds** (critical/high/medium limits) — applied per project; overall gate fails if any project fails.
 - **Complexity limits** (cyclomatic, cognitive)
 - **Test coverage minimum**
 - **Ignored files/paths** (node_modules, dist/, etc.)
 - **Custom rules** (team-specific patterns)
 - **Severity overrides** (what constitutes critical vs. high)
+
+Minimal monorepo example:
+
+```json
+{
+  "project": {
+    "rootFolders": [
+      "apps/user-service",
+      "apps/order-service",
+      "apps/notification-service"
+    ]
+  },
+  "qualityGate": {
+    "maxCritical": 0,
+    "maxHigh": 3,
+    "maxMedium": 10
+  },
+  "output": {
+    "suggestFixes": true
+  }
+}
+```
 
 See [review rules documentation](references/RULESET.md) for all review rules, [configuration guide](references/CONFIGURATION.md) for detailed setup instructions, and [input handling guide](references/INPUT_HANDLING.md) for branch/PR detection logic.

@@ -111,15 +111,22 @@ git ls-tree -r --name-only HEAD
 - For `--single` mode:
   - Identify all files in branch: `git ls-tree -r --name-only HEAD`
   - Count scope: total files scanned and directories covered
-- Scan for package.json to confirm Next.js project (check next dependency)
+- **Detect project root**:
+  - Look for `.codereview.config.json` in the repo root.
+  - Read `project.rootFolder` from config; if absent, default to `.` (treat repo root as the Next.js root).
+  - Verify the resolved folder contains a `package.json` with a `next` dependency; if missing, warn and ask the user to correct `project.rootFolder`.
+  - All subsequent file analysis, path resolution, and `package.json` scanning is performed relative to `project.rootFolder`.
+
 - Present scope summary:
   ```
   Review Type: [PR Comparison / Branch Comparison / Single Branch Scan]
   Source Branch: feature/auth-system
   Destination Branch: main (for comparison modes)
+  Next.js Root: [project.rootFolder value]
   Files Changed: X files (comparison modes)
   Files Scanned: X files (single mode)
   Lines: Y added, Z deleted (comparison modes)
+  Backend Folders: [resolved list]
   ```
 
 ### Phase 2: Multi-Dimensional Analysis
@@ -239,14 +246,24 @@ For each issue found, record:
 
 ```json
 {
+  "project": {
+    "rootFolder": "apps/web"
+  },
   "output": {
     "suggestFixes": true
+  },
+  "backend": {
+    "codeFolders": ["apps/web/src/app/api", "apps/web/src/server"],
+    "includeServerActions": true
   }
 }
 ```
 
+- `project.rootFolder` => path (relative to repo root) to the Next.js application folder. Used in monorepo setups where Next.js lives in a subfolder such as `apps/web` or `packages/frontend`. Defaults to `.` (repo root) if not set. All other relative paths (`backend.codeFolders`, ignored paths) are resolved relative to this folder.
 - `suggestFixes: true` => include fix suggestions when available.
 - `suggestFixes: false` => omit fix suggestions.
+- `backend.codeFolders` => paths to API routes, server actions, and server utilities, relative to `project.rootFolder`. Defaults to `["src/app/api", "pages/api", "app/api", "server"]`.
+- `backend.includeServerActions` => when `true`, also treat files with `"use server"` directive as backend code (default: `true`).
 
 **Severity Levels**:
 - **Critical**: Security vulnerability, production crash risk, data loss risk
@@ -528,12 +545,30 @@ Evaluate against configurable thresholds:
 
 ## Configuration Options
 
-Customize per project/team:
+Customize per project/team via `.codereview.config.json` at the **repo root**:
+
+- **Next.js project root** (`project.rootFolder`) — path to the Next.js app inside the repo. Required for monorepos (e.g., `apps/web`, `packages/frontend`). Defaults to `.`.
+- **Backend code folders** (`backend.codeFolders`) — paths to API routes, server actions, and server utilities, relative to `project.rootFolder`. Defaults to `["src/app/api", "pages/api", "app/api", "server"]`.
+- **Server actions inclusion** (`backend.includeServerActions`) — whether `"use server"` files are treated as backend code (default: `true`).
 - **Quality gate thresholds** (critical/high/medium limits)
 - **Complexity limits** (cyclomatic, cognitive)
 - **Test coverage minimum**
 - **Ignored files/paths** (node_modules, dist/, .next/, etc.)
 - **Custom rules** (team-specific patterns)
 - **Severity overrides** (what constitutes critical vs. high)
+
+Minimal monorepo example:
+
+```json
+{
+  "project": {
+    "rootFolder": "apps/web"
+  },
+  "backend": {
+    "codeFolders": ["apps/web/src/app/api", "apps/web/src/server"],
+    "includeServerActions": true
+  }
+}
+```
 
 See [review rules documentation](references/RULESET.md) for all review rules, [configuration guide](references/CONFIGURATION.md) for detailed setup instructions, and [input handling guide](references/INPUT_HANDLING.md) for branch/PR detection logic.

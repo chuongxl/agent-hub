@@ -1,4 +1,5 @@
 {
+  "project.rootFolders": "./",
   "profile": "startup",
   "description": "Fast iteration profile for startups - lenient thresholds to enable rapid development",
   "qualityGate": {

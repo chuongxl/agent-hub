@@ -1,4 +1,5 @@
 {
+  "project.rootFolder": "./",
   "profile": "enterprise",
   "description": "Comprehensive enterprise-grade code review standards with balanced quality and velocity",
   "author": "self-learning-suite",

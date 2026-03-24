@@ -1,4 +1,5 @@
 {
+  "project.rootFolders": "./",
   "qualityGate": {
     "criticalIssuesAllowed": 0,
     "highIssuesAllowed": 3,

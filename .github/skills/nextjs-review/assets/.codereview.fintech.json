@@ -1,4 +1,6 @@
 {
+  
+  "project.rootFolder": "./",
   "profile": "fintech",
   "description": "Strict financial services grade review standards with maximum security, compliance, and audit requirements",
   "author": "self-learning-suite",

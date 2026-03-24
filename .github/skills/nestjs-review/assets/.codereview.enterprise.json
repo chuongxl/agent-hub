@@ -1,4 +1,5 @@
 {
+  "project.rootFolders": "./",
   "profile": "enterprise",
   "description": "Strict enterprise profile - enforces high code quality standards and comprehensive testing",
   "qualityGate": {

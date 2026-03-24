@@ -1,4 +1,6 @@
 {
+
+  "project.rootFolder": "./",
   "profile": "startup",
   "description": "Optimized for fast-moving startups prioritizing speed-to-market over strict standards",
   "author": "self-learning-suite",

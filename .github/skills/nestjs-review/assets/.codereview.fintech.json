@@ -1,4 +1,5 @@
 {
+  "project.rootFolders": "./",
   "profile": "fintech",
   "description": "Maximum security + stability profile for fintech applications - strictest rules and maximum test coverage",
   "qualityGate": {
